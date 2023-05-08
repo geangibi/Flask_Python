@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Menu de Opções</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <style>
+      body {
+        background-color: #f7f7f7;
+      }
+      
+      .form-container {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      .form-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+      }
+      
+      .form-label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      
+      .form-select {
+        font-size: 1.2rem;
+        color: #333;
+        background-color: #f5f5f5;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      .form-submit {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.2s ease-in-out;
+      }
+      
+      .form-submit:hover {
+        background-color: #0069d9;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container my-5">
+      <div class="form-container">
+        <h1 class="form-title">Selecione um alimento:</h1>
+        <form method="post" action="{{ url_for('buscar_alimento') }}">
+          <div class="form-group">
+            <label for="opcao" class="form-label"></label>
+            <select name="opcao" id="opcao" class="form-select select2">
+              {% for item in lista %}
+                <option value="{{ item[0] }}">{{ item[1] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="form-submit">Selecionar</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
