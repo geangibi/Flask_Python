@@ -1,6 +1,5 @@
 from flask import Flask, render_template, jsonify, request
 import json
-import jinja2
 
 app = Flask(__name__)
 
@@ -31,10 +30,24 @@ def index():
 def buscar_alimento():
     id_busca = int(request.form['opcao'])
     alimento = buscar_por_id(id_busca)
-    print(id_busca)
-    print(alimento)
-    return render_template('resultado.html', alimento=alimento)
-    
+    lista = ListaItens()
+    return render_template('homepage.html', alimento=alimento, lista=lista)
+
+@app.route('/lista_itens', methods=['GET', 'POST'])
+def lista_itens():
+    # Lista inicial de itens (pode ser carregada de um arquivo ou banco de dados)
+    lista = [(str(row["id"]), row["description"]) for row in dados]
+
+    if request.method == 'POST':
+        # Se o método da requisição for POST, significa que o usuário adicionou um novo item
+        novo_item = ListaItens()
+        lista.append(novo_item)
+    elif request.args.get('remover'):
+        # Se o parâmetro 'remover' estiver presente na URL, significa que o usuário quer remover um item
+        id_remover = int(request.args.get('remover'))
+        lista = [item for item in lista if item[0] != str(id_remover)]
+
+    return render_template('homepage.html', lista=lista)
 
 
 if __name__ == '__main__':
